@@ -1,26 +1,20 @@
 import Head from 'next/head';
 
 import axios from 'axios';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const NewPost = () => {
-  const [file, setFile] = useState();
-  const [caption, setCaption] = useState('');
-  const submit = async (event) => {
-    event.preventDefault();
-
+  const { register, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('image', file);
-    formData.append('caption', caption);
+    formData.append('image', data.image[0]);
+    formData.append('caption', data.caption);
+
     await axios.post('http://localhost:8888/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   };
 
-  const fileSelected = (event) => {
-    const file = event.target.files[0];
-    setFile(file);
-  };
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <Head>
@@ -29,7 +23,32 @@ const NewPost = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <form
+        {/* "handleSubmit" will validate your inputs before invoking "onSubmit"
+         */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* register your input into the hook by invoking the "register" function */}
+          <input type="file" {...register('image')} />
+
+          {/* include validation with required or other standard HTML validation rules */}
+          <input type="text" {...register('caption')} />
+
+          <input type="submit" />
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default NewPost;
+
+// const [file, setFile] = useState();
+// const [caption, setCaption] = useState('');
+// const fileSelected = (event) => {
+//   const file = event.target.files[0];
+//   setFile(file);
+// };
+/**
+   * <form
           onSubmit={submit}
           style={{ width: 650 }}
           className="flex flex-col space-y-5 px-5 py-14"
@@ -43,9 +62,14 @@ const NewPost = () => {
           ></input>
           <button type="submit">Submit</button>
         </form>
-      </div>
-    </div>
-  );
-};
+        const submit = async (event) => {
+    event.preventDefault();
 
-export default NewPost;
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('caption', caption);
+    await axios.post('http://localhost:8888/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  };
+   */
