@@ -10,7 +10,9 @@ export default function Home() {
   }, []);
 
   const getPosts = async () => {
-    const posts = await axios.get('http://localhost:3000');
+    const posts = await axios.get(
+      'https://express-multer-r2-production.up.railway.app/'
+    );
 
     // setMessage(new URL(message.data));
     setPosts(posts.data);

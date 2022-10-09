@@ -10,9 +10,13 @@ const NewPost = () => {
     formData.append('image', data.image[0]);
     formData.append('caption', data.caption);
 
-    await axios.post('http://localhost:8888/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    await axios.post(
+      'https://express-multer-r2-production.up.railway.app/upload',
+      formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
   };
 
   return (
