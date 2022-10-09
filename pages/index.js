@@ -10,11 +10,13 @@ export default function Home() {
   }, []);
 
   const getPosts = async () => {
-    const posts = await axios.get('http://localhost:8888');
+    const posts = await axios.get('http://localhost:3000');
 
     // setMessage(new URL(message.data));
     setPosts(posts.data);
   };
+
+  console.log(posts);
 
   return (
     <div className=" w-screen flex justify-center items-center">
