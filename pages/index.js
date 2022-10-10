@@ -2,6 +2,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Post from '../components/Post';
 
 export default function Home() {
   const [posts, setPosts] = useState('');
@@ -10,15 +11,10 @@ export default function Home() {
   }, []);
 
   const getPosts = async () => {
-    const posts = await axios.get(
-      'https://express-multer-r2-production.up.railway.app/'
-    );
+    const posts = await axios.get('http://localhost:3000');
 
-    // setMessage(new URL(message.data));
     setPosts(posts.data);
   };
-
-  console.log(posts);
 
   return (
     <div className=" w-screen flex justify-center items-center">
@@ -31,13 +27,13 @@ export default function Home() {
         {posts &&
           posts.map((post) => (
             <div key={post.id}>
-              <Image
+              <Post
                 src={post.imageName}
-                alt="Picture of the author"
-                width="430px"
-                height={768}
-              ></Image>
-              <p> {post.caption}</p>
+                caption={post.caption}
+                id={post.id}
+                setPosts={setPosts}
+                posts={posts}
+              />
             </div>
           ))}
       </div>

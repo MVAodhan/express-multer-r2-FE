@@ -2,9 +2,11 @@ import Head from 'next/head';
 
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 const NewPost = () => {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('image', data.image[0]);
@@ -17,6 +19,7 @@ const NewPost = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       }
     );
+    router.push('/');
   };
 
   return (
