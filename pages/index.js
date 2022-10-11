@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { useAtom } from 'jotai';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Post from '../components/Post';
+import { postsAtom } from '../utils/atoms';
 
 export default function Home() {
-  const [posts, setPosts] = useState('');
+  const [posts, setPosts] = useAtom(postsAtom);
   useEffect(() => {
     getPosts();
   }, []);
