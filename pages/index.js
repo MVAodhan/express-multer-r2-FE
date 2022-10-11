@@ -17,6 +17,15 @@ export default function Home() {
     setPosts(posts.data);
   };
 
+  const deletePostClicked = async (id, posts) => {
+    console.log(`deletePostClicked = (${id})`);
+
+    const filtered = posts.filter((post) => post.id !== id);
+
+    setPosts(filtered);
+    await axios.delete('http://localhost:3000/deletePost/' + id);
+  };
+
   return (
     <div className=" w-screen flex justify-center items-center">
       <Head>
@@ -32,8 +41,7 @@ export default function Home() {
                 src={post.imageName}
                 caption={post.caption}
                 id={post.id}
-                setPosts={setPosts}
-                posts={posts}
+                deletePostClicked={deletePostClicked}
               />
             </div>
           ))}
